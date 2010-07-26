@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "crowd_rails"
-    gem.summary = %Q{Single Sign On for Atlassian Crowd 2.0}
-    gem.description = %Q{Single Sign On for Atlassian Crowd 2.0}
+    gem.summary = %Q{Single Sign On for Atlassian Crowd 2.0 with Ruby on Rails}
+    gem.description = %Q{Single Sign On for Atlassian Crowd 2.0 with Ruby on Rails}
     gem.email = "post @nospam@ stefanwille.com"
     gem.homepage = "http://github.com/stefanwille/crowd_rails"
     gem.authors = ["Stefan Wille"]
