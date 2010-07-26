@@ -1,6 +1,67 @@
 = crowd_rails
 
-Description goes here.
+Single sign on (SSO) with Atlassian Crowd 2.0 for Rails.
+
+
+== INSTALL:
+
+  sudo gem install crowd_rails
+
+== REQUIREMENTS:
+
+* Gem crowd-stefanwille
+* soap4r[http://dev.ctor.org/soap4r] v1.5.8
+* Atlassian Crowd[http://atlassian.com/crowd] v2.0
+* Ruby v1.8.6 (or later)
+* Rails 2.3.8 (or later)
+
+== USE:
+
+Add a file config/initializers/crowd_setup.rb and configure:
+
+require 'crowd'
+
+Crowd.crowd_url = 'http://127.0.0.1:8095/crowd/services/SecurityServer'
+Crowd.crowd_app_name = 'soaptest'
+Crowd.crowd_app_pword = 'soaptest'
+Crowd.crowd_validation_factors_need_user_agent = false  # false for Crowd 2.0.5, true for Crowd 2.0.2
+Crowd.crowd_session_validationinterval = 0  # Set > 0 for authentication caching. 
+
+Then add this to your ApplicationController class:
+
+class ApplicationController < ActionController::Base
+  ...
+  before_filter :authenticate 
+
+  private
+    def authenticate      
+      return if RAILS_ENV == "test"
+      
+      return if crowd_authenticated?
+      
+      authenticate_or_request_with_http_basic('My Application') do |user_name, password| 
+        crowd_authenticate(user_name, password)
+      end
+    end
+end
+
+This will give you the usual gray password box (aka 'basic auth'). 
+Replace Rails' the call to authenticate_or_request_with_http_basic() 
+that asks the user for username and password if you want some fancier.
+
+
+Assumptions (used above):
+
+* Crowd Server is on localhost, port 8095
+* Application name and password is 'soaptest'
+* Application 'soaptest' directory set to 'True'
+
+
+== FEATURES:
+
+Interoperable single sign on with Atlassian Crowd 2.0.2 and 2.0.5.
+Can be configured for authentication caching.
+
 
 == Note on Patches/Pull Requests
  
