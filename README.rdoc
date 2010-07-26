@@ -9,7 +9,7 @@ Single sign on (SSO) with Atlassian Crowd 2.0 for Ruby on Rails.
 
 == REQUIREMENTS:
 
-* Gem crowd-stefanwille
+* gem crowd-stefanwille
 * soap4r[http://dev.ctor.org/soap4r] v1.5.8
 * Atlassian Crowd[http://atlassian.com/crowd] v2.0
 * Ruby v1.8.6 (or later)
@@ -59,8 +59,8 @@ Assumptions (used above):
 
 == FEATURES:
 
-Interoperable single sign on with Atlassian Crowd 2.0.2 and 2.0.5.
-Can be configured for authentication caching.
+* Interoperable single sign on with Atlassian Crowd 2.0.2 and 2.0.5.
+* Can be configured for authentication caching.
 
 
 == Note on Patches/Pull Requests
