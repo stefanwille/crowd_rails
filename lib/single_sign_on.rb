@@ -75,12 +75,20 @@ class Crowd
     # Returns the crowd token or nil.
     
     def crowd_token
-      logger.info "params: #{params[Crowd.crowd_cookie_tokenkey]}"
-      logger.info "params: #{cookies[Crowd.crowd_cookie_tokenkey]}"
-      logger.info "params: #{session[Crowd.crowd_session_tokenkey]}"
+      logger.info "params token: #{params[Crowd.crowd_cookie_tokenkey]}"
+      logger.info "cookies token: #{cookies[Crowd.crowd_cookie_tokenkey]}"
+      logger.info "session token: #{session[Crowd.crowd_session_tokenkey]}"
       token = params[Crowd.crowd_cookie_tokenkey] || cookies[Crowd.crowd_cookie_tokenkey] || session[Crowd.crowd_session_tokenkey]
       logger.info "token = #{token}"
       token
+    end
+
+    # Marks the user as unauthenticated
+
+    def crowd_log_out
+      logger.info "Crowd: log out"
+      crowd_update_token(nil)
+      crowd_clear_cache
     end
         
     private
@@ -89,16 +97,12 @@ class Crowd
     # Validation factors are essential for interoperation with Atlassian's client library!
 
     def crowd_validation_factors
-      validation_factors = { 'remote_address' => crowd_remote_address}
+      validation_factors = { 'remote_address' => crowd_remote_address }
 
       if Crowd.crowd_validation_factors_need_user_agent
         validation_factors['User-Agent'] = crowd_user_agent
       end
-      
-      #validation_factors = { 'User-Agent' => crowd_user_agent, 'remote_address' => crowd_remote_address}
-      
-      #logger.info "Crowd request.env: #{request.env.inspect}"
-      
+            
       forwarded_for = request.env['X-Forwarded-For']
       if forwarded_for.present? && forwarded_for != request.remote_ip
         validation_factors['X-Forwarded-For'] = forwarded_for
@@ -113,7 +117,7 @@ class Crowd
     
     def crowd_remote_address
       # For localhost, Crowd wants the IPv6 address.
-      (request.remote_ip == '127.0.0.1') ? '0:0:0:0:0:0:0:1%0' : request.remote_ip
+      (request.remote_ip == '127.0.0.1' || request.remote_ip == '0.0.0.0') ? '0:0:0:0:0:0:0:1%0' : request.remote_ip
     end
     
 
@@ -139,13 +143,21 @@ class Crowd
     # Marks the session as successfully authenticated and sets the SSO cookie.
     
     def crowd_mark_session_as_authenticated(token)
-      session[Crowd.crowd_session_tokenkey] = token
-      cookies[Crowd.crowd_cookie_tokenkey] = { :value	=> token, :domain => crowd_cookie_domain, :path => "/", :secure => Crowd.get_cookie_info.secure }
+      crowd_update_token(token)
       if crowd_caching_enabled?
         logger.info "Crowd: Caching authentication"
         session[Crowd.crowd_session_lastvalidation] = Time.now
       end
     end    
+        
+    def crowd_update_token(token)
+      session[Crowd.crowd_session_tokenkey] = token
+      cookies[Crowd.crowd_cookie_tokenkey] = { :value	=> token, :domain => crowd_cookie_domain, :path => "/", :secure => Crowd.get_cookie_info.secure }
+    end
+    
+    def crowd_clear_cache
+      session[Crowd.crowd_session_lastvalidation] = nil
+    end
 
     def crowd_cookie_domain
       cookie_domain = Crowd.get_cookie_info.domain
