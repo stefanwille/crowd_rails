@@ -64,6 +64,13 @@ Assumptions (used above):
 * Interoperable single sign on with Atlassian Crowd 2.0.2 and 2.0.5.
 * Can be configured for authentication caching.
 
+Available methods in module Crowd::SingleSignOn:
+* crowd_authenticated? - Returns whether the user is already authenticated.
+* crowd_authenticate(user_name, password) - Authenticates the user with the given user name and password and marks the user as authenticated on success.
+* crowd_authenticate!(user_name, password) - Same as #crowd_authenticate, but raises an AuthenticationException on failure.
+* crowd_current_user_display_name - Returns the current users display name.
+* crowd_current_user - Returns the current user, as seen by crowd.
+* crowd_token - Returns the crowd token or nil.
 
 == Note on Patches/Pull Requests
  
