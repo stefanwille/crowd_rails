@@ -13,27 +13,27 @@ class Crowd
       
     # Returns whether the user is already authenticated.
     def crowd_authenticated?
-      logger.info "Crowd: All cookies: #{cookies.inspect}"
+      crowd_logger.info "Crowd: All cookies: #{cookies.inspect}"
       
       token = crowd_token
       if token.blank?
-        logger.info "Crowd: No token"
+        crowd_logger.info "Crowd: No token"
         return false
       end
       
       if crowd_authentication_cached?
-        logger.info "Crowd: Authentication is cached"
+        crowd_logger.info "Crowd: Authentication is cached"
         return true
       else 
-        logger.info "Crowd: Authentication is not cached"
+        crowd_logger.info "Crowd: Authentication is not cached"
       end      
       
       if Crowd.is_valid_principal_token?(token, crowd_validation_factors)
-        logger.info "Crowd: Token is valid"      
+        crowd_logger.info "Crowd: Token is valid"      
         crowd_mark_session_as_authenticated(token)
         return true
       else 
-        logger.info "Crowd: Token is invalid"      
+        crowd_logger.info "Crowd: Token is invalid"      
         return false
       end
     end
@@ -52,10 +52,10 @@ class Crowd
     # Same as #crowd_authenticate, but raises an AuthenticationException on failure.
     
     def crowd_authenticate!(user_name, password)
-      logger.info "Crowd: Authenticating user #{user_name}"
+      crowd_logger.info "Crowd: Authenticating user #{user_name}"
       token = Crowd.authenticate_principal(user_name, password, crowd_validation_factors)
       crowd_mark_session_as_authenticated(token)      
-      logger.info "Crowd: Authentication successful, token #{token}"
+      crowd_logger.info "Crowd: Authentication successful, token #{token}"
       token
     end  
 
@@ -75,18 +75,18 @@ class Crowd
     # Returns the crowd token or nil.
     
     def crowd_token
-      logger.info "params token: #{params[Crowd.crowd_cookie_tokenkey]}"
-      logger.info "cookies token: #{cookies[Crowd.crowd_cookie_tokenkey]}"
-      logger.info "session token: #{session[Crowd.crowd_session_tokenkey]}"
+      crowd_logger.info "params token: #{params[Crowd.crowd_cookie_tokenkey]}"
+      crowd_logger.info "cookies token: #{cookies[Crowd.crowd_cookie_tokenkey]}"
+      crowd_logger.info "session token: #{session[Crowd.crowd_session_tokenkey]}"
       token = params[Crowd.crowd_cookie_tokenkey] || cookies[Crowd.crowd_cookie_tokenkey] || session[Crowd.crowd_session_tokenkey]
-      logger.info "token = #{token}"
+      crowd_logger.info "token = #{token}"
       token
     end
 
     # Marks the user as unauthenticated
 
     def crowd_log_out
-      logger.info "Crowd: log out"
+      crowd_logger.info "Crowd: log out"
       crowd_update_token(nil)
       crowd_clear_cache
     end
@@ -108,7 +108,7 @@ class Crowd
         validation_factors['X-Forwarded-For'] = forwarded_for
       end
 
-      logger.info "Crowd validation_factors: #{validation_factors.inspect}"
+      crowd_logger.info "Crowd validation_factors: #{validation_factors.inspect}"
       
       validation_factors
     end
@@ -145,7 +145,7 @@ class Crowd
     def crowd_mark_session_as_authenticated(token)
       crowd_update_token(token)
       if crowd_caching_enabled?
-        logger.info "Crowd: Caching authentication"
+        crowd_logger.info "Crowd: Caching authentication"
         session[Crowd.crowd_session_lastvalidation] = Time.now
       end
     end    
@@ -177,7 +177,15 @@ class Crowd
     def crowd_caching_enabled?
       Crowd.crowd_session_validationinterval > 0
     end    
-
+    
+    # Logger used for debugging
+    def crowd_logger
+      unless @crowd_logger
+        @crowd_logger = Logger.new(STDOUT).
+        @crowd_logger.level = Logger::WARN
+      end
+      @crowd_logger
+    end
   end  
 end
 
