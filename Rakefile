@@ -21,7 +21,7 @@ rescue LoadError
 end
 
 def version
-  File.exist?('VERSION') ? File.read('VERSION') : ""
+  File.exist?('VERSION') ? File.read('VERSION').strip : ""
 end
 
 task :push => [:test, :build] do
