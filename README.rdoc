@@ -30,6 +30,8 @@ Add a file config/initializers/crowd_setup.rb and configure:
 Then add this to your ApplicationController class:
 
   class ApplicationController < ActionController::Base
+    include Crowd::SingleSignOn
+
     ...
     before_filter :authenticate 
 
