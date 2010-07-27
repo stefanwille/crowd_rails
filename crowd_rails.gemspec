@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{crowd_rails}
-  s.version = "0.5.10"
+  s.version = "0.5.11"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stefan Wille"]
-  s.date = %q{2010-07-26}
-  s.description = %q{Single Sign On for Atlassian Crowd 2.0}
+  s.date = %q{2010-07-27}
+  s.description = %q{Single Sign On for Atlassian Crowd 2.0 with Ruby on Rails}
   s.email = %q{post @nospam@ stefanwille.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -23,7 +23,9 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "crowd_rails.gemspec",
      "lib/crowd_rails.rb",
+     "lib/single_sign_on.rb",
      "test/helper.rb",
      "test/test_crowd_rails.rb"
   ]
@@ -31,11 +33,10 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Single Sign On for Atlassian Crowd 2.0}
+  s.summary = %q{Single Sign On for Atlassian Crowd 2.0 with Ruby on Rails}
   s.test_files = [
     "test/helper.rb",
-     "test/test_crowd_rails.rb",
-     "test/test_crowd_rails_orig.rb"
+     "test/test_crowd_rails.rb"
   ]
 
   if s.respond_to? :specification_version then
