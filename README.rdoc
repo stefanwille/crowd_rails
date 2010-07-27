@@ -11,7 +11,7 @@ Single sign on (SSO) with Atlassian Crowd 2.0 for Ruby on Rails.
 
 * gem crowd-stefanwille
 * soap4r[http://dev.ctor.org/soap4r] v1.5.8
-* Atlassian Crowd[http://atlassian.com/crowd] v2.0
+* Atlassian Crowd v2.0
 * Ruby v1.8.6 (or later)
 * Rails 2.3.8 (or later)
 
