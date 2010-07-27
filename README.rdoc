@@ -71,6 +71,7 @@ Available methods in module Crowd::SingleSignOn:
 * crowd_current_user_display_name - Returns the current users display name.
 * crowd_current_user - Returns the current user, as seen by crowd.
 * crowd_token - Returns the crowd token or nil.
+* crowd_log_out - Logs the user out
 
 == Note on Patches/Pull Requests
  
