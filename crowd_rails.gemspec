@@ -26,8 +26,7 @@ Gem::Specification.new do |s|
      "crowd_rails.gemspec",
      "lib/crowd_rails.rb",
      "lib/single_sign_on.rb",
-     "test/helper.rb",
-     "test/test_crowd_rails.rb"
+     "test/helper.rb"
   ]
   s.homepage = %q{http://github.com/stefanwille/crowd_rails}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -36,8 +35,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Single Sign On for Atlassian Crowd 2.0 with Ruby on Rails}
   s.test_files = [
-    "test/helper.rb",
-     "test/test_crowd_rails.rb"
+    "test/helper.rb"
   ]
 
   if s.respond_to? :specification_version then
