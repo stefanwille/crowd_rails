@@ -51,13 +51,13 @@ This will give you the usual gray password box (aka 'basic auth').
 Replace Rails' the call to authenticate_or_request_with_http_basic() 
 that asks the user for username and password if you want some fancier.
 
+There is an example Rails app at http://github.com/stefanwille/crowd_rails_test that implements this approach.
 
 Assumptions (used above):
 
 * Crowd Server is on localhost, port 8095
 * There is an application configured in Crowd with name and password 'soaptest'
 * Application 'soaptest' directory set to 'True'
-
 
 == FEATURES:
 
