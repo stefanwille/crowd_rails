@@ -11,11 +11,17 @@ begin
     gem.homepage = "http://github.com/stefanwille/crowd_rails"
     gem.authors = ["Stefan Wille"]
     gem.add_dependency "crowd-stefanwille", "= 0.5.11"
+    # Silence a warning about missing rubyforge_project
+    gem.rubyforge_project = "nowarning"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
+end
+
+task :push => [:test, :build] do
+  system("gem push pkg/crowd-stefanwille-#{Crowd::Version::STRING}.gem")
 end
 
 require 'rake/testtask'

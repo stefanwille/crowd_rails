@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/stefanwille/crowd_rails}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
+  s.rubyforge_project = %q{nowarning}
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Single Sign On for Atlassian Crowd 2.0 with Ruby on Rails}
   s.test_files = [
