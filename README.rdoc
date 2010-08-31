@@ -53,6 +53,8 @@ that asks the user for username and password if you want some fancier.
 
 There is an example Rails app at http://github.com/stefanwille/crowd_rails_test that implements this approach.
 
+See the rdoc at http://rdoc.info/github/stefanwille/crowd_rails/master/frames.
+
 Assumptions (used above):
 
 * Crowd Server is on localhost, port 8095
