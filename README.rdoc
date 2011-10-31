@@ -2,6 +2,7 @@
 
 Single sign on (SSO) with Atlassian Crowd 2.0 for Ruby on Rails.
 
+See also: http://stefanwille.com/2010/07/rails-plugin-for-single-sign-on-with-atlassian-crowd/
 
 == INSTALL:
 
